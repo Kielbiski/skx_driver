@@ -10,7 +10,7 @@
 /*#include <linux/workqueue.h>*/
 
 MODULE_AUTHOR("Noah Steinberg and Jeremy Kielbiski");
-MODULE_DESCRIPTION("A dedicated Xbox One Controller driver");
+MODULE_DESCRIPTION("A dedicated Xbox One Controller driver for Ubuntu 16.04LTS");
 MODULE_LICENSE("GPL");
 
 /*#define DELAY_FF_SPRING 1*/
@@ -353,20 +353,18 @@ static int skx_probe(struct usb_interface *interface, const struct usb_device_id
 
   usb_make_path(usb_dev, skx->phys_path, sizeof(skx->phys_path));
   strlcat(skx->phys_path, "/input0", sizeof(skx->phys_path));
-  dev_dbg(&interface->dev, "Recieved Device Path: %s", skx->phys_path);
+  dev_dbg(&interface->dev, "Received Device Path: %s", skx->phys_path);
 
   skx->input_data = usb_alloc_coherent(usb_dev, PKT_LEN, GFP_KERNEL,
     &skx->input_data_dma);
   if(!skx->input_data)
   {
-    //Should free memory first!
     return -ENOMEM;
   }
 
   skx->interrupt_in = usb_alloc_urb(0, GFP_KERNEL);
   if(!skx->interrupt_in)
   {
-    //Should free memory first!
     return -ENOMEM;
   }
 
@@ -375,14 +373,13 @@ static int skx_probe(struct usb_interface *interface, const struct usb_device_id
   skx->name = "Microsoft X-Box One S pad";
 
   if (interface->cur_altsetting->desc.bInterfaceNumber != 0) {
-    //Should free memory first!
+
     return -ENODEV;
   }
 
   err = skx_init_output(interface, skx);
   if(err)
   {
-    //Should free memory first!
     return -ENOMEM;
   }
 
@@ -398,13 +395,11 @@ static int skx_probe(struct usb_interface *interface, const struct usb_device_id
   err = skx_init_input(skx);
   if(err)
   {
-    //Should free memory first!
     return -ENOMEM;
   }
   err = skx_start_input(skx);
   if(err)
   {
-    //Should free memory first!
     return -ENOMEM;
   }
 
