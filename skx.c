@@ -745,11 +745,12 @@ static int skx_init_input(struct usb_skx *skx)
   indev->dev.parent = &skx->interface->dev;
   input_set_drvdata(indev, skx);
 
-
   __set_bit(EV_KEY, indev->evbit);
   __set_bit(EV_ABS, indev->evbit);
+  
   for (i = 0; skx_buttons[i] >= 0; i++)
       __set_bit(skx_buttons[i], indev->keybit);
+  
   for (i = 0; skx_axis[i] >= 0; i++){
     set_bit(skx_axis[i], indev->absbit);
     switch (skx_axis[i]) {
